@@ -27,7 +27,6 @@
 		9DA7CCCD2744F41900970819 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9DA7CCD42744F42E00970819 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9DA7CCD52744F55B00970819 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
-		9DA7CCD62744F60000970819 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +62,6 @@
 				9DA7CCCD2744F41900970819 /* main.swift */,
 				9DA7CCD42744F42E00970819 /* Images.xcassets */,
 				9DA7CCD52744F55B00970819 /* Colors.xcassets */,
-				9DA7CCD62744F60000970819 /* Localizable.strings */,
 			);
 			path = ResourcesGenerator;
 			sourceTree = "<group>";

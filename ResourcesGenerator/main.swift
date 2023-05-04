@@ -82,26 +82,26 @@ func makeSwift(_ type: ResourceType, _ target: [String], _ outputPath: String, _
         }
         file += "\n"
         file += indent + "public static func setImage(name: String) -> UIImage? {\n"
-        file += indent + indent + "guard let image = UIImage(named: named, in: .module, with: nil) else { return nil }\n"
+        file += indent + indent + "guard let image = UIImage(named: name, in: .module, compatibleWith: nil) else { return nil }\n"
         file += indent + indent + "return image\n"
         file += indent + "}\n"
         file += "}\n\n\n"
         // -enum
 
         // test code
-//        file += "import XCTest\n"
-//        file += "@testable import ably\n\n"
-//        file += "final class DesignSystemTests: XCTestCase {\n"
-//        file += indent + "func testImageIsNotNull() {\n"
-//        sortedTarget.forEach {
-//            file += indent + indent + "let \($0)Image = AssetImage.\($0)\n"
-//        }
-//        file += "\n"
-//        sortedTarget.forEach {
-//            file += indent + indent + "XCTAssertNotNil(\($0)Image)\n"
-//        }
-//        file += indent + "}\n"
-//        file += "}\n"
+        //        file += "import XCTest\n"
+        //        file += "@testable import ably\n\n"
+        //        file += "final class DesignSystemTests: XCTestCase {\n"
+        //        file += indent + "func testImageIsNotNull() {\n"
+        //        sortedTarget.forEach {
+        //            file += indent + indent + "let \($0)Image = AssetImage.\($0)\n"
+        //        }
+        //        file += "\n"
+        //        sortedTarget.forEach {
+        //            file += indent + indent + "XCTAssertNotNil(\($0)Image)\n"
+        //        }
+        //        file += indent + "}\n"
+        //        file += "}\n"
 
     case .color:
         let sortedTarget = target.sorted(by: { $1 > $0 })
@@ -110,38 +110,27 @@ func makeSwift(_ type: ResourceType, _ target: [String], _ outputPath: String, _
         file += "\n"
         
         // +enum
-        file += "enum ColorRawValue: String, CaseIterable {" + "\n"
+        file += "enum \(enumName)Raw: String, CaseIterable {" + "\n"
         sortedTarget.forEach {
             file += indent + "case \($0)\n"
         }
         file += "}" + "\n\n"
         file += "public enum \(enumName) {\n"
         sortedTarget.forEach {
-            file += indent + "public static let \($0) = setColor(name: ColorRawValueRaw.\($0).rawValue)\n"
+            file += indent + "public static let \($0) = setColor(name: \(enumName)Raw.\($0).rawValue)\n"
         }
         file += "\n"
-        file += indent + "public static func setColor(name: String) -> UIImage? {\n"
-        file += indent + indent + "guard let color = UIColor(named: named, in: .module, with: nil) else { return nil }\n"
+        file += indent + "public static func setColor(name: String) -> UIColor? {\n"
+        file += indent + indent + "guard let color = UIColor(named: name, in: .module, compatibleWith: nil) else { return nil }\n"
         file += indent + indent + "return color\n"
         file += indent + "}\n"
-        file += "}\n\n\n"
+        file += "}\n\n"
 
-        file += "enum ColorRawValue: String, CaseIterable {" + "\n"
+        file += "extension Color {\n"
         sortedTarget.forEach {
-            file += indent + "case \($0)\n"
+            file += indent + "public static let \($0) = Color(\(enumName).\($0) ?? UIColor())\n"
         }
-        file += "}" + "\n\n"
-        file += "public enum \(enumName) {\n"
-        sortedTarget.forEach {
-            file += indent + "public static let \($0) = setColor(name: ColorRawValueRaw.\($0).rawValue)\n"
-        }
-        file += "\n"
-        file += indent + "public static func setColor(name: String) -> UIImage? {\n"
-        file += indent + indent + "guard let color = UIColor(named: named, in: .module, with: nil) else { return nil }\n"
-        file += indent + indent + "return color\n"
-        file += indent + "}\n"
-        file += "}\n\n\n"
-        // -enum
+        file += "}"
 
         // test code
 //        file += "import XCTest\n"
@@ -168,7 +157,7 @@ let (resourceType, path, output, enumName) = (
     ResourceType.color,
     "/Users/ojunhyeon/Desktop/ResourceGenerator/ResourcesGenerator/Colors.xcassets",
     "/Users/ojunhyeon/Desktop/ResourceGenerator/ResourcesGenerator/Colors.swift",
-    "Color"
+    "AssetColor"
 )
 let (imageResourceType, imagePath, imageOutput, imageEnumName) = (
     ResourceType.image,
@@ -184,12 +173,10 @@ guard !colorParse.isEmpty else {
     fatalError("\n[Error] No data is found and failed to export a file...\n")
 }
 
-guard let parse = fm.parser(type: .color, targetPath: path) else { fatalError("") }
-guard !parse.isEmpty else {
+guard let imageParse = fm.parser(type: .color, targetPath: path) else { fatalError("") }
+guard !imageParse.isEmpty else {
     fatalError("\n[Error] No data is found and failed to export a file...\n")
 }
 
-let result = makeSwift(resourceType, colorParse, output, enumName)
-let imageResult = makeSwift(imageResourceType, parse, imageOutput, imageEnumName)
-let resultStr = result ? "Succeeded" : "Failed"
-print("\n\(resultStr) to generate resource manager file at \(output).\n")
+_ = makeSwift(resourceType, colorParse, output, enumName)
+_ = makeSwift(imageResourceType, imageParse, imageOutput, imageEnumName)
