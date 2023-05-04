@@ -55,9 +55,9 @@ enum AssetImageRaw: String, CaseIterable {
     case content_background_info_secondary
     case content_background_info_tertiary
     case content_background_success_pressed
+    case content_background_success_primary
     case content_background_success_secondary
     case content_background_success_tertiary
-    case content_background_successs_primary
     case content_background_warning_pressed
     case content_background_warning_primary
     case content_background_warning_secondary
@@ -72,8 +72,8 @@ enum AssetImageRaw: String, CaseIterable {
     case content_grey_primary
     case content_grey_secondary
     case content_grey_systemContent
-    case content_grey_systemGery
-    case content_grey_teritiary
+    case content_grey_systemGrey
+    case content_grey_tertiary
     case content_info_pressed
     case content_info_primary
     case content_success_pressed
@@ -137,9 +137,9 @@ public enum AssetImage {
     public static let content_background_info_secondary = setImage(name: AssetImageRaw.content_background_info_secondary.rawValue)
     public static let content_background_info_tertiary = setImage(name: AssetImageRaw.content_background_info_tertiary.rawValue)
     public static let content_background_success_pressed = setImage(name: AssetImageRaw.content_background_success_pressed.rawValue)
+    public static let content_background_success_primary = setImage(name: AssetImageRaw.content_background_success_primary.rawValue)
     public static let content_background_success_secondary = setImage(name: AssetImageRaw.content_background_success_secondary.rawValue)
     public static let content_background_success_tertiary = setImage(name: AssetImageRaw.content_background_success_tertiary.rawValue)
-    public static let content_background_successs_primary = setImage(name: AssetImageRaw.content_background_successs_primary.rawValue)
     public static let content_background_warning_pressed = setImage(name: AssetImageRaw.content_background_warning_pressed.rawValue)
     public static let content_background_warning_primary = setImage(name: AssetImageRaw.content_background_warning_primary.rawValue)
     public static let content_background_warning_secondary = setImage(name: AssetImageRaw.content_background_warning_secondary.rawValue)
@@ -154,8 +154,8 @@ public enum AssetImage {
     public static let content_grey_primary = setImage(name: AssetImageRaw.content_grey_primary.rawValue)
     public static let content_grey_secondary = setImage(name: AssetImageRaw.content_grey_secondary.rawValue)
     public static let content_grey_systemContent = setImage(name: AssetImageRaw.content_grey_systemContent.rawValue)
-    public static let content_grey_systemGery = setImage(name: AssetImageRaw.content_grey_systemGery.rawValue)
-    public static let content_grey_teritiary = setImage(name: AssetImageRaw.content_grey_teritiary.rawValue)
+    public static let content_grey_systemGrey = setImage(name: AssetImageRaw.content_grey_systemGrey.rawValue)
+    public static let content_grey_tertiary = setImage(name: AssetImageRaw.content_grey_tertiary.rawValue)
     public static let content_info_pressed = setImage(name: AssetImageRaw.content_info_pressed.rawValue)
     public static let content_info_primary = setImage(name: AssetImageRaw.content_info_primary.rawValue)
     public static let content_success_pressed = setImage(name: AssetImageRaw.content_success_pressed.rawValue)
@@ -164,7 +164,7 @@ public enum AssetImage {
     public static let content_warning_primary = setImage(name: AssetImageRaw.content_warning_primary.rawValue)
 
     public static func setImage(name: String) -> UIImage? {
-        guard let image = UIImage(named: named, in: .module, with: nil) else { return nil }
+        guard let image = UIImage(named: name, in: .module, compatibleWith: nil) else { return nil }
         return image
     }
 }
